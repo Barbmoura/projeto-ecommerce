@@ -1,6 +1,5 @@
-USE Ecommerce;
-
 -- Parte 1: Criando índices em Banco de Dados  
+USE Ecommerce;
 CREATE INDEX idx_descricao ON Produto(Descricao) USING BTREE; -- Busca por produto. Exemplo: Smartphone 128GB  
 CREATE INDEX idx_categoria ON Produto(Categoria) USING BTREE; -- Busca por categoria. Exemplo: Eletrônico
 CREATE INDEX idx_status ON Pedido(StatusPedido) USING BTREE; -- Busca por status do pedido. Exemplo: Enviado
@@ -18,7 +17,7 @@ CREATE TABLE Cliente(
     CONSTRAINT pk_IdCliente PRIMARY KEY (Id),
     CONSTRAINT unique_NomeCliente UNIQUE (Nome)
 );
-drop procedure ProcedureInsertDadosCliente;
+
 DELIMITER \\
 CREATE PROCEDURE ProcedureInsertDadosCliente(
 	IN NomeProcedure VARCHAR(50),
@@ -27,7 +26,7 @@ CREATE PROCEDURE ProcedureInsertDadosCliente(
 )
 BEGIN
 	IF (LENGTH(SenhaProcedure) < 10 AND LENGTH(SenhaProcedure) > 7) THEN 
-		INSERT INTO Cliente(Nome, Email, Senha, DataCadastro) VALUES(NomeProcedure, EmailProcedure, md5(SenhaProcedure), now());
+		INSERT INTO Cliente(Nome, Email, Senha, DataCadastro) VALUES(NomeProcedure, EmailProcedure, MD5(SenhaProcedure), NOW());
         SELECT * FROM Cliente;
 	ELSE
 		SELECT 'Forneça outra senha' AS Message_error;
